@@ -5,16 +5,10 @@ from my_keys import OPENAI_API_KEY, ASSISTANT_TOKEN
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
-def create_thread(prompt_textplain):
+def create_thread():
     try:
         thread = client.beta.threads.create()
-        print("Thread ID:", thread)
-        client.beta.threads.messages.create(
-            thread_id=thread.id,
-            role="user",
-            content= prompt_textplain,
-        )
-        
+        print("Thread ID:", thread)        
         return thread.id
     
     except Exception as e:
@@ -22,30 +16,43 @@ def create_thread(prompt_textplain):
         return None
 
     
-def run_prompt(thread_id): 
+def run_prompt(thread_id, prompt_textplain): 
+    
     try: 
+        print("empezando run_prompt")
+        client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role="user",
+        content= prompt_textplain,
+        )
+        print("Mensaje enviado al hilo.")
+
         run = client.beta.threads.runs.create(
                 thread_id=thread_id,
                 assistant_id=ASSISTANT_TOKEN 
             )
-
+        print("Ejecución creada.")
         while True:
             try:
                 keep_retrieving_run = client.beta.threads.runs.retrieve(
                     thread_id=thread_id,
                     run_id=run.id
                 )
-                
+                print("Ejecución recuperada.")
                 if keep_retrieving_run.status == 'failed':
                     print("\nLa ejecución ha fallado.")
                     print("Error Message keep_retrieving_run: ", keep_retrieving_run.last_error.message)
                     raise RuntimeError("La ejecución ha fallado.")
 
-                if keep_retrieving_run.status == "completed":
+                elif keep_retrieving_run.status == "completed":
                     print("\nLa ejecución ha sido completada.")
                     break
+
                 else:
-                    time.sleep(5)
+                    time.sleep(3)
+                
+                print("Ejecución status:", keep_retrieving_run.status)
+
             except Exception as e:
                 print("Error al recuperar la ejecución:", e)
                 raise RuntimeError("Error al recuperar la ejecución.")

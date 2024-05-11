@@ -1,7 +1,6 @@
 import requests
 import PyPDF2
 from io import BytesIO
-from pdftext import texto
 from my_keys import BOT_API_URL, BOT_TOKEN
 
 prompt_pdf = 'Detecta el idioma del texto que te enviare al final. En su respectivo idioma, tomando en cuenta los campos de “country”, “industry”, “score” y “total possible score”, sugiere un plan de acción anual personalizado, desglosado de manera mensual, con el fin de incrementar el score recibido. Por favor enfócate en las preguntas cuya respuesta es distinta a “not applicable”. Responde en el mismo idioma que esta el texto. El texto es el siguiente: '

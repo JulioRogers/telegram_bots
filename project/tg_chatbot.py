@@ -1,10 +1,9 @@
 import requests
 import PyPDF2
 from io import BytesIO
-from pdftext import texto
 from my_keys import BOT_API_URL, BOT_TOKEN
 
-prompt_pdf = 'Detecta el idioma del texto que te enviare al final. En su respectivo idioma, tomando en cuenta los campos de “country”, “industry”, “score” y “total possible score”, sugiere un plan de acción anual personalizado, desglosado de manera mensual, con el fin de incrementar el score recibido. Por favor enfócate en las preguntas cuya respuesta es distinta a “not applicable”. Responde en el mismo idioma que esta el texto. El texto es el siguiente: '
+prompt_pdf = 'Tomando las recomendaciones dadas para cada seccion, sugiere un plan de acción anual personalizado, desglosado de manera mensual, con el objetivo de implementar las recomendaciones. Por favor enfócate en las secciones cuya respuesta es distinta a “not applicable”. El texto es el siguiente: '
 
 def get_updates(offset):
     params = {"timeout": 100, "offset": offset}
@@ -18,7 +17,7 @@ def get_updates(offset):
 
 def send_messages(chat_id, text):
     url = f"https://api.telegram.org/{BOT_TOKEN}/sendMessage"
-    params = {"chat_id": chat_id, "text": text}
+    params = {"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}
     response = requests.post(url, params=params)
     return response
 

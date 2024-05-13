@@ -1,0 +1,10 @@
+h1,h2{
+	text-align: center;
+}
+
+span.thick {
+	/* color:red; */
+	font-weight: bold;
+}
+
+/* p {color:blue} */

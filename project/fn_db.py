@@ -21,10 +21,11 @@ def cargar_ultimo_identificador(filename):
             data = json.load(file)
             if data:  # Verifica si el archivo JSON tiene datos
                 # Asume que el último identificador está en la última entrada agregada
-                last_id = list(data.values())[-1]  # Asumiendo que los identificadores están almacenados como valores
+                last_id = list(data.keys())[-1]  # Asumiendo que los identificadores están almacenados como claves
                 return int(last_id)  # Convierte el identificador a entero
             else:
                 return 0
+                
     except FileNotFoundError:
         return 0  # Si el archivo no existe, comienza desde 0
     except json.JSONDecodeError:

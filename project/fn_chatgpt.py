@@ -1,6 +1,6 @@
 from openai import OpenAI
 import time
-from my_keys import OPENAI_API_KEY, ASSISTANT_TOKEN
+from my_keys import OPENAI_API_KEY
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -16,7 +16,7 @@ def create_thread():
         return None
 
     
-def run_prompt(thread_id, prompt_textplain): 
+def run_prompt(thread_id, prompt_textplain, ASSISTANT_TOKEN): 
     
     try: 
         print("empezando run_prompt")
